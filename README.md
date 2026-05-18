@@ -30,12 +30,10 @@ py -m pip install -r requirements.txt
 File name: .env
 
 Data:
-
+```bash
 BASE_URL=
 TRELLO_API_KEY=
-
 TRELLO_API_TOKEN=
-
 EMAIL=
-
 PASSWORD=
+```
