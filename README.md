@@ -32,7 +32,6 @@ File name: .env
 Data:
 
 BASE_URL=
-
 TRELLO_API_KEY=
 
 TRELLO_API_TOKEN=
