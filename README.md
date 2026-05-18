@@ -1,39 +1,38 @@
-# TrelloAutomatedTestsUIAPIPlaywrightPytest
+# DynpackTests
 
-## Description
-Automated UI and API testing using Playwright and Pytest.
+# Requirements:
 
-## Table of Contents
+Python installed, preferably version 3.13
 
-1. [Cloning an automated test repository](#cloning-an-automated-test-repository)
-2. [Preparation of the environment](#preparation-of-the-environment)
-
-## Cloning an automated test repository
-
-Clone the **TrelloRESTAutomatedTestsBackend** repository:
+# Installation (run everything in the main project folder):
 
 ```bash
-git clone https://github.com/Wojtalo94/TrelloAutomatedTestsUIAPIPlaywrightPytest.git
-```
-
-## Preparation of the environment
-
-Create a virtual environment (**venv**) along with the installation of additional libraries from the file **requirements.txt**:
-
-```bash
-python -m venv .venv
+C:\...\Python313\python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt
+python.exe -m pip install --upgrade pip
+py -m pip install -r requirements.txt
 ```
 
-Prepare a **csv file** with the data in the **tools** folder.
+# Running all tests:
 
-File name: *user_data.csv*
+```bash
+.venv\Scripts\python.exe -m pytest
+```
+
+# Run the selected test (with the smoke marker):
+
+```bash
+.venv\Scripts\python.exe -m pytest -m smoke
+```
+
+# Prepare a csv file with the data in the tools folder.
+
+File name: .env
 
 Data:
-```
-TRELLO_API_KEY,{TRELLO_API_KEY}
-TRELLO_API_TOKEN,{TRELLO_API_TOKEN}
-EMAIL,{EMAIL}
-PASSWORD,{PASSWORD}
-```
+
+BASE_URL=
+TRELLO_API_KEY=
+TRELLO_API_TOKEN=
+EMAIL=
+PASSWORD=
