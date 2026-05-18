@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 logs/logs_web.log
 report.html
+.env

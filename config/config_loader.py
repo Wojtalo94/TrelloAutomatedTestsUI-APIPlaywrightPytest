@@ -11,5 +11,7 @@ def load_test_config(path="config/browser_config.yaml"):
 # wczytujemy zmienne z pliku .env
 load_dotenv()
 BASE_URL = os.getenv("BASE_URL")
-USERNAME = os.getenv("USERNAME")
+TRELLO_API_KEY = os.getenv("TRELLO_API_KEY")
+TRELLO_API_TOKEN = os.getenv("TRELLO_API_TOKEN")
+EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
