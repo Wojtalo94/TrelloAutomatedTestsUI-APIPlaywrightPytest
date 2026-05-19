@@ -11,6 +11,7 @@ C:\...\Python313\python -m venv .venv
 .venv\Scripts\activate
 python.exe -m pip install --upgrade pip
 py -m pip install -r requirements.txt
+playwright install
 ```
 
 # Running all tests:
@@ -30,6 +31,7 @@ py -m pip install -r requirements.txt
 File name: .env
 
 Data:
+
 ```bash
 BASE_URL=
 TRELLO_API_KEY=

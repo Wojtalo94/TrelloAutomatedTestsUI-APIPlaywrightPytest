@@ -4,3 +4,4 @@ __pycache__/
 logs/logs_web.log
 report.html
 .env
+state.json
