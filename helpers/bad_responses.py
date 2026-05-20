@@ -31,7 +31,7 @@ class BadResponses:
 
         page.on("response", _on_response)
 
-    def assert_no_bad_responses(self):
+    def assert_no_bad_responses(self) -> None:
         """Sprawdza zebrane złe odpowiedzi."""
         if self.bad_responses:
             for resp in self.bad_responses:

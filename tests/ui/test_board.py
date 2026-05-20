@@ -13,3 +13,7 @@ def test_create_board(auth_page, capture_bad_responses, board_name):
     # Inicjalizacja POM
     board_page = BoardPage(auth_page)
     board_page.create_board(board_name)
+    board_page.delete_board(board_name)
+    board_page.check_that_all_boards_have_been_removed()
+
+    

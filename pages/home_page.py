@@ -14,7 +14,7 @@ class HomePage():
         self._main_page_field = page.locator('input[name="x"]')
 
 
-    def sign_in_to_home_page(self, BASE_URL: str, EMAIL: str, PASSWORD: str):
+    def sign_in_to_home_page(self, BASE_URL: str, EMAIL: str, PASSWORD: str) -> None:
         self._logger.info("Sign in to home page")
         self.page.goto(BASE_URL)
 
