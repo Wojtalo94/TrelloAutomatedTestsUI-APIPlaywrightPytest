@@ -11,3 +11,4 @@ def test_create_board_via_UI_and_verify_in_api(rest_controller, logged_in_page):
     board_id = rest_controller.get_board_id(board_name)
     rest_controller.check_board_name_and_desc(board_id, board_name)
     rest_controller.delete_board(board_id)
+    rest_controller.check_if_board_has_been_deleted(board_id, board_name)

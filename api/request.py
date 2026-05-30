@@ -9,7 +9,8 @@ class Request():
         self._logger = logging.getLogger("Request")
         # A timeout has been added to prevent HTTP requests from hanging and blocking tests
         self._timeout = timeout
-        self._urls = {"boards": "https://api.trello.com/1/boards/"}
+        self._urls = {"boards": "https://api.trello.com/1/boards/",
+                      "members": "https://api.trello.com/1/members/"}
     
     
     def url(self, name: str) -> str:
@@ -72,6 +73,10 @@ class Request():
 
     def get_board(self, path: str) -> tuple[Any, int]:
         return self.get(self.url("boards") + path)
+
+
+    def get_members(self, path: str) -> tuple[Any, int]:
+        return self.get(self.url("members") + path)
 
 
     def delete_board(self, path: str) -> tuple[Any, int]:

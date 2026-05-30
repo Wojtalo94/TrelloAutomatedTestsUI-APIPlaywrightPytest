@@ -65,7 +65,16 @@ class RestController():
 
     def get_board_id(self, board_name):
         self._logger.info(f"Checking the boards '{board_name}' ID")
-        response, status_code = self._request.get_board(f"{board_name}?{self.query_string}") #tutaj jest błąd
+        response, status_code = self._request.get_members(f"me/boards?{self.query_string}")
         assert status_code == 200, f"Expected status code 200, but got {status_code}"
-        actual_board_id = response.get('board_id')
-        return actual_board_id
+        # jeśli response to lista, weź pierwszy element; jeśli dict, użyj go bez zmian
+        if isinstance(response, list):
+            if not response:
+                raise RuntimeError("Board not found")
+            board = response[0]
+        elif isinstance(response, dict):
+            board = response
+        else:
+            raise RuntimeError("Board not found")
+
+        return board.get("id")
