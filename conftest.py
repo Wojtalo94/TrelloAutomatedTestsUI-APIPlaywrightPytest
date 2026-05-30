@@ -106,7 +106,19 @@ def logged_in_page(playwright: Playwright, browser_options):
 @pytest.fixture(scope="function")
 def rest_controller():
     rc = RestController()
+    
     yield rc
+
+    # teardown: cleanup even if the test failed
+    try:
+        if getattr(rc, "board_id", None):
+            rc._logger.info("Teardown: deleting board %s", rc.board_id)
+            try:
+                rc.delete_board()
+            except Exception:
+                rc._logger.exception("Teardown: failed to delete board")
+    except Exception:
+        logging.getLogger("conftest").exception("Error during fixture teardown")
 
 
 @pytest.fixture(scope="function")
@@ -211,9 +223,9 @@ def check_accessibility(axe, request, logged_in_page):
     return _check
 
 
-# ---------------------------
+# =========================
 # Pytest-html integration
-# ---------------------------
+# =========================
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
