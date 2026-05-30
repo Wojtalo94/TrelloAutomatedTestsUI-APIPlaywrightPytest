@@ -47,6 +47,7 @@ class BoardPage():
         self._delete_board_button.click()
         self._confirm_delete_board_button.click()
 
+
     def check_that_all_boards_have_been_removed(self) -> None:
         self._logger.info("Checking if there is no message about lack of open board")
         text_to_verify = self._text_for_verification_of_lack_of_tables.inner_text()

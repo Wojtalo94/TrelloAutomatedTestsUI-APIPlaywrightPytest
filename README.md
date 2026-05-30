@@ -2,7 +2,7 @@
 
 ## Requirements:
 
-Python installed, preferably version 3.13
+`Python` installed, preferably version 3.13
 
 ## Installation (run everything in the main project folder):
 
@@ -27,8 +27,8 @@ py -m pip install -r requirements.txt
 
 # Description
 
-Automated test framework created for modern web application testing using Python and Playwright.
-The project focuses on scalable architecture, maintainability, readable logs, UI, API and hybrid UI/API testing.
+Automated test framework created for modern web application testing using `Python` and `Playwright`.
+The project focuses on scalable architecture, maintainability, readable logs, `UI`, `API` and hybrid `UI&API` testing.
 
 ## Project Goals
 
@@ -43,21 +43,21 @@ This framework is designed to provide:
 
 ## Tech Stack
 
-- Python 3.13
-- Playwright
-- Pytest
-- Python Requests
-- HTML reporting (pytest-html)
-- python-dotenv
-- Logging architecture
-- YAML configuration
-- logging-based diagnostics
-- Page Object Model (POM)
-- pure UI, pure API and Hybrid UI + API testing
+- `Python` 3.13
+- `Playwright`
+- `Pytest`
+- Python `requests`
+- HTML reporting `pytest-html`
+- `python-dotenv`
+- `Logging` architecture
+- `YAML` configuration
+- `logging-based` diagnostics
+- `POM` - Page Object Model
+- pure `UI`, pure `API` and Hybrid `UI+API` testing
 
 ## UI Testing with Playwright
 
-The framework uses Playwright for fast and reliable browser automation.
+The framework uses `Playwright` for fast and reliable browser automation.
 
 Features include:
 
@@ -70,7 +70,7 @@ Features include:
 
 ## API Testing with Requests
 
-API tests are implemented using Python requests, independent from the UI layer.
+`API` tests are implemented using Python `requests`, independent from the `UI` layer.
 
 Benefits:
 
@@ -83,9 +83,9 @@ Benefits:
 
 The framework supports:
 
-- pure UI tests
-- pure API tests
-- hybrid UI + API scenarios
+- pure `UI` tests
+- pure `API` tests
+- hybrid `UI+API` scenarios
 
 This allows:
 
@@ -107,13 +107,13 @@ The project follows the Page Object Model architecture pattern:
 
 ## Advanced HTML Reporting
 
-Test reports are generated using (configured in pytest.ini):
+Test reports are generated using (configured in `pytest.ini`):
 
 ```python
 addopts = --html=report.html --self-contained-html
 ```
 
-You don't need to generate a report as you would in Allure, the report.html file appears automatically in the root directory, all you have to do is run the tests.
+You don't need to generate a report as you would in `Allure`, the `report.html` file appears automatically in the root directory, all you have to do is run the tests.
 
 ![Pytest report](images/README/report-pytest.jpg)
 
@@ -127,7 +127,7 @@ The report contains:
 - additional attachments, such as screenshots:
   ![Pytest report](images/README/report_with_screenshots-pytest.jpg)
 
-In addition, the current repository is also configured for the Allure report:
+In addition, the current repository is also configured for the `Allure` report:
 ![Allure report](images/README/report-allure.jpg)
 
 ## Browser Error Monitoring
@@ -149,7 +149,7 @@ This helps detect:
 
 ## Real-Time Logging
 
-The framework heavily utilizes Python logging:
+The framework heavily utilizes Python `logging`:
 
 ```python
 import logging
@@ -159,8 +159,8 @@ import logging
 
 Features:
 
-- centralized logging architecture
-- live console logs using log_cli
+- centralized `logging` architecture
+- live console logs using `log_cli`
   ![Live log (log_cli)](images/README/live_logs-python.jpg)
 - debug-friendly execution flow
 - easier CI/CD diagnostics
@@ -187,9 +187,9 @@ They check pages and subpages such as:
 I also added:
 
 - automatic test failure upon violations
-- Axe report generation
-- embedding the Axe HTML report into the pytest-html report
-- embedding the Axe JSON into the pytest-html report
+- `Axe` report generation
+- embedding the `Axe HTML` report into the `pytest-html` report
+- embedding the `Axe JSON` into the `pytest-html` report
 
 ## Configuration Management
 
