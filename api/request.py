@@ -28,10 +28,12 @@ class Request():
         try:
             data = response.json()
         except (JSONDecodeError, ValueError):
-            self._logger.error("Response is not JSON: %s", response.text)
+            # used '_logger.info' instead of '_logger.error' below because there are cases where we check if something is missing, e.g., after deleting an table
+            self._logger.info("Response is not JSON: %s", response.text)
             data = {}
         if response.status_code >= 400:
-            self._logger.error(f"Request failed: {response.status_code} - {response.text}")
+            # used '_logger.info' instead of '_logger.error' below because there are cases where we check if something is missing, e.g., after deleting an table
+            self._logger.info(f"Request failed: {response.status_code} - {response.text}")
         return data, response.status_code
 
 

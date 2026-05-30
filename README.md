@@ -249,3 +249,5 @@ TRELLO_API_TOKEN=
 EMAIL=
 PASSWORD=
 ```
+
+For `TRELLO_API_TOKEN` you can go to: https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key=YOUR_API_KEY
