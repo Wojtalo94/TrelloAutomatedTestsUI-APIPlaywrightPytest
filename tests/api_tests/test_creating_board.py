@@ -12,3 +12,4 @@ def test_create_update_and_delete_board(rest_controller):
     rest_controller.check_board_name_and_desc(board_id, changed_board_name, changed_board_desc)
 
     rest_controller.delete_board(board_id)
+    rest_controller.check_if_board_has_been_deleted(board_id, board_name)
