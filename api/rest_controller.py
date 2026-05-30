@@ -12,16 +12,19 @@ class RestController():
     
     
     def get_members_boards_information(self):
+        self._logger.info("Getting information about members from the boards")
         response = self._request.get_board(f"{self.board_id}/memberships?{self.query_string}")
         return response
     
 
     def get_board_information(self):
+        self._logger.info("Getting information about the board")
         response = self._request.get_board(f"{self.board_id}?{self.query_string}")
         return response
     
 
     def create_board(self, board_name):
+        self._logger.info("Creating the board")
         response, status_code = self._request.post_board(f"?name={board_name}&{self.query_string}")
         assert status_code == 200, f"Expected status code 200, but got {status_code}"
         self.board_id = response['id']
@@ -29,10 +32,12 @@ class RestController():
 
 
     def delete_board(self):
+        self._logger.info("Deleting the board")
         _ , status_code = self._request.delete_board(f"{self.board_id}?{self.query_string}")
         assert status_code == 200, f"Expected status code 200, but got {status_code}"
 
 
     def update_board(self, board_name, board_desc):
+        self._logger.info("Updating the board")
         _ , status_code = self._request.put_board(f"{self.board_id}?{self.query_string}&name={board_name}&desc={board_desc}")
         assert status_code == 200, f"Expected status code 200, but got {status_code}"

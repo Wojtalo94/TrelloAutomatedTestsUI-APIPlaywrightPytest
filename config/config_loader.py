@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 
-def load_test_config(path="config/browser_config.yaml"):
+def load_test_config(path="config/debug_browser_config.yaml"):
     with open(path, "r") as file:
         return yaml.safe_load(file)
 
