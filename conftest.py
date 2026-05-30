@@ -109,24 +109,13 @@ def rest_controller():
     
     yield rc
 
-    # teardown: cleanup even if the test failed
-    try:
-        if getattr(rc, "board_id", None):
-            rc._logger.info("Teardown: deleting board %s", rc.board_id)
-            try:
-                rc.delete_board()
-            except Exception:
-                rc._logger.exception("Teardown: failed to delete board")
-    except Exception:
-        logging.getLogger("conftest").exception("Error during fixture teardown")
-
 
 @pytest.fixture(scope="function")
 def capture_bad_responses(logged_in_page):
-    """Create BadResponses BEFORE the test runs so it collects during the test.
+    """
+    Create BadResponses BEFORE the test runs so it collects during the test.
     Yields the BadResponses instance so the test can inspect it during execution.
-    After the test finishes the fixture will call assert_no_bad_responses() which will
-    raise AssertionError if any bad responses were collected (thus failing the test).
+    After the test finishes the fixture will call assert_no_bad_responses() which will raise AssertionError if any bad responses were collected (thus failing the test).
     """
     page = logged_in_page
     context = page.context
@@ -181,8 +170,7 @@ def axe(axe_instance):
 @pytest.fixture(scope="function")
 def check_accessibility(axe, request, logged_in_page):
     """
-    Helper to run Axe on the current page, auto-fail on violations (critical/serious),
-    and attach generated report paths to the test node for pytest-html integration.
+    Helper to run Axe on the current page, auto-fail on violations (critical/serious), and attach generated report paths to the test node for pytest-html integration.
     Usage in test: check_accessibility()
     """
     def _check():
@@ -230,8 +218,7 @@ def check_accessibility(axe, request, logged_in_page):
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """
-    Attach axe report paths from the test node to the test report object so
-    pytest-html hooks can render them.
+    Attach axe report paths from the test node to the test report object so pytest-html hooks can render them.
     Additionally, if the test fails (rep.when == 'call' and rep.failed), it takes a screenshot and attaches it to pytest-html.
     """
     outcome = yield

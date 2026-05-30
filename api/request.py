@@ -13,12 +13,18 @@ class Request():
     
     
     def url(self, name: str) -> str:
+        """
+        Acts as a centralized registry for all API URLs used in tests.
+        """
         if name not in self._urls:
             raise AttributeError(f"Missing {name} in urls list")
         return self._urls[name]
 
 
     def _prepare_return(self, response) -> tuple[Any, int]:
+        """
+        Normalizes HTTP response into a consistent structure for tests.
+        """
         try:
             data = response.json()
         except (JSONDecodeError, ValueError):

@@ -8,11 +8,16 @@ class BadResponses:
         self.bad_responses = []
 
     def add_page(self, page: Page):
-        """Podłącza nasłuch na response dla tej konkretnej strony."""
+        """
+        Attaches a Playwright response listener to the given page.
+        Collects all HTTP responses with status >= 400 (client/server errors) and stores them in memory for later validation.
+        This allows passive monitoring of network failures during E2E tests without interrupting test execution immediately.
+        """
 
         def _on_response(response):
             try:
                 status = response.status
+            # ignore Playwright errors
             except Exception:
                 return
 
@@ -32,7 +37,11 @@ class BadResponses:
         page.on("response", _on_response)
 
     def assert_no_bad_responses(self) -> None:
-        """Sprawdza zebrane złe odpowiedzi."""
+        """
+        Asserts that no HTTP errors (status >= 400) were captured during the test run.
+        Iterates through all collected bad responses, logs detailed information about each failure (URL, status code, resource type, and page context), and fails the test if any invalid responses were detected.
+        This acts as a final safeguard to ensure frontend does not trigger hidden API or asset failures during E2E execution.
+        """
         if self.bad_responses:
             for resp in self.bad_responses:
                 self._logger.error(
