@@ -22,7 +22,7 @@ class BoardPage():
         self._confirm_delete_board_button = page.get_by_test_id("close-board-delete-board-confirm-button")
         self._text_for_verification_of_lack_of_tables = page.get_by_test_id("no-boards-to-reopen")
         self._board_share_button = page.get_by_test_id("board-share-button")
-        self._close_window_closed_boards = page.get_by_test_id("CloseIcon").nth(1)
+        self._close_window_closed_boards = page.locator('button:has(span[data-testid="CloseIcon"])')
 
 
     def create_board(self, board_name: str) -> None:
