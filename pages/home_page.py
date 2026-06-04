@@ -12,10 +12,11 @@ class HomePage():
         self._submit_login_field = page.get_by_test_id("login-submit-idf-testid")
         self._without_two_step_verification_field = page.get_by_test_id("mfa-promote-dismiss-idf-testid")
         self._main_page_field = page.locator('input[name="x"]')
+        self._create_board_button = page.get_by_test_id("create-board-tile")
 
 
     def sign_in_to_home_page(self, BASE_URL: str, EMAIL: str, PASSWORD: str) -> None:
-        self._logger.info("Sign in to home page")
+        self._logger.info("Sign in to home page.")
         self.page.goto(BASE_URL)
 
         self._log_in_field.click()
@@ -24,5 +25,12 @@ class HomePage():
         self._password_field.fill(PASSWORD)
         self._submit_login_field.click()
         #self._without_two_step_verification_field.click()
+        self._create_board_button.wait_for(state="visible", timeout=15000)
 
+        self.page.wait_for_load_state(timeout=15000)
+
+
+    def open_main_page(self, BASE_URL: str, LOGIN: str) -> None:
+        self._logger.info("Open main page.")
+        self.page.goto(BASE_URL + "u/" + LOGIN + "/boards")
         self.page.wait_for_load_state(timeout=15000)

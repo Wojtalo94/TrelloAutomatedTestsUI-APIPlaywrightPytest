@@ -10,7 +10,7 @@ from pytest_playwright_axe import Axe
 from playwright.sync_api import Playwright
 from api.rest_controller import RestController
 from helpers.bad_responses import BadResponses
-from config.config_loader import load_test_config, BASE_URL, TRELLO_API_KEY, TRELLO_API_TOKEN, EMAIL, PASSWORD
+from config.config_loader import load_test_config, BASE_URL, EMAIL, PASSWORD
 
 
 # =========================
@@ -222,59 +222,19 @@ def pytest_runtest_makereport(item, call):
     Additionally, if the test fails (rep.when == 'call' and rep.failed), it takes a screenshot and attaches it to pytest-html.
     """
     outcome = yield
-    rep = outcome.get_result()
-    # copy attributes if present
-    axe_html = getattr(item, "axe_html", None)
-    axe_json = getattr(item, "axe_json", None)
-    if axe_html:
-        rep.axe_html = axe_html
-    if axe_json:
-        rep.axe_json = axe_json
+    report = outcome.get_result()
+    # ensure report.extra exists
+    report.extra = getattr(report, "extra", [])
 
     # only for UI / accessibility tests and only when the test failed in 'call'
-    if rep.when == "call" and rep.failed and ("ui" in item.keywords or "accessibility" in item.keywords):
+    if report.when == "call" and report.failed and ("ui" in item.keywords or "ui_and_api" in item.keywords):
         page = item.funcargs.get("logged_in_page")
 
-        if page is not None and hasattr(page, "screenshot") and callable(getattr(page, "screenshot")):
-            ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            safe_test_name = item.name.replace(" ", "_").replace("/", "_")
-            filename = SCREENSHOT_DIR / f"{safe_test_name}_{ts}.png"
-            try:
-                page.screenshot(path=str(filename), full_page=True)
-                if not hasattr(rep, "extra"):
-                    rep.extra = []
-                rep.extra.append(extras.image(str(filename)))
-            except Exception as e:
-                logging.getLogger(__name__).exception(f"Failed to capture screenshot: {e}")
-        else:
-            logging.getLogger(__name__).debug("logged_in_page fixture not found or has no screenshot method; skipping screenshot.")
+        if page:
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            filename = SCREENSHOT_DIR / f"{item.name}_{timestamp}.png"
 
+            page.screenshot(path=str(filename), full_page=True)
 
-def pytest_html_results_table_html(report, data):
-    """
-    Append Axe HTML (iframe) and JSON (pre) to pytest-html report for each test.
-    """
-    axe_html = getattr(report, "axe_html", None)
-    axe_json = getattr(report, "axe_json", None)
-
-
-    if axe_html:
-        try:
-            raw = Path(axe_html).read_bytes()
-            b64 = base64.b64encode(raw).decode("ascii")
-            data_uri = f"data:text/html;base64,{b64}"
-            data.append(f"<h4>Axe Accessibility Report</h4><iframe src='{data_uri}' width='100%' height='500px'></iframe>")
-        except Exception:
-            # fallback to file path
-            data.append(f"<h4>Axe Accessibility Report</h4><iframe src='{axe_html}' width='100%' height='500px'></iframe>")
-
-
-    if axe_json:
-        try:
-            content = Path(axe_json).read_text(encoding="utf-8")
-            # limit size to avoid huge HTML rows
-            if len(content) > 20000:
-                content = content[:20000] + "\n... (truncated)"
-            data.append(f"<h4>Axe JSON</h4><pre style='max-height:300px;overflow:auto'>{content}</pre>")
-        except Exception:
-            pass
+            if hasattr(report, "extra"):
+                report.extra.append(extras.image(str(filename)))
