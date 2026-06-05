@@ -161,10 +161,12 @@ They check pages and subpages such as:
 
 I also added:
 
-- automatic test failure upon violations
-- `Axe` report generation
-- embedding the `Axe HTML` report into the `pytest-html` report
-- embedding the `Axe JSON` into the `pytest-html` report
+- automatic reporting of `Axe` test failures in pytest when violations occur:
+  ![Pytest report](images/README/axe_in_terminal.jpg)
+- adding `Axe` violations to the `pytest-html` report:
+  ![Pytest report](images/README/axe_in_pytest_report_html.jpg)
+- generation of `Axe` reports:
+  ![Pytest report](images/README/axe_report.jpg)
 
 ## Advanced HTML Reporting
 
