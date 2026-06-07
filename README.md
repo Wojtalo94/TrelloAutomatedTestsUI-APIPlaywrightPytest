@@ -55,6 +55,8 @@ This framework is designed to provide:
 - `POM` - Page Object Model
 - pure `UI`, pure `API` and Hybrid `UI+API` testing
 
+All libraries listed in the `requirements.txt` file were updated on June 3, 2026, to the latest stable version.
+
 ## UI Testing with Playwright
 
 The framework uses `Playwright` for fast and reliable browser automation.
