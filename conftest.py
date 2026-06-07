@@ -123,20 +123,20 @@ def capture_bad_responses(logged_in_page):
     bad = BadResponses()
     bad.add_page(page)
 
-    def on_new_page(new_page):
+    def _on_new_page(new_page):
         logger.info("New page detected and attached to BadResponses")
         bad.add_page(new_page)
 
-    context.on("page", on_new_page)
+    context.on("page", _on_new_page)
     try:
         yield bad
 
     finally:
         try:
             if hasattr(context, "remove_listener"):
-                context.remove_listener("page", on_new_page)
+                context.remove_listener("page", _on_new_page)
             elif hasattr(context, "off"):
-                context.off("page", on_new_page)
+                context.off("page", _on_new_page)
             else:
                 logger.debug("BrowserContext has no remove_listener/off method; leaving listener attached")
         except Exception as e:
