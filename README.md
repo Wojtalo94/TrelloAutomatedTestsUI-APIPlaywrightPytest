@@ -107,23 +107,6 @@ The project follows the Page Object Model architecture pattern:
 - reusable components improve maintainability
 - easier scalability for large projects
 
-## Browser Error Monitoring
-
-The framework includes custom response monitoring for detecting:
-
-- HTTP 4xx responses
-- HTTP 5xx responses
-- frontend/backend communication issues
-
-Even if the UI test itself passes, the framework additionally reports hidden application problems found during execution.
-
-This helps detect:
-
-- broken API calls
-- missing resources
-- unexpected backend errors
-- silent frontend issues
-
 ## Real-Time Logging
 
 The framework heavily utilizes Python `logging`:
@@ -142,6 +125,59 @@ Features:
 - debug-friendly execution flow
 - easier CI/CD diagnostics
 - structured runtime information
+
+## Advanced HTML Reporting
+
+Test reports (configured in `pytest.ini`) are generated using:
+
+```ini
+addopts = --html=report.html --self-contained-html
+```
+
+You don't need to generate a report as you would in `Allure`, the `report.html` file appears automatically in the root directory, all you have to do is run the tests.
+
+![Pytest report](images/README/report-pytest.jpg)
+
+The report contains:
+
+- passed/failed/skipped tests (as well as additional statuses Expected failures, Unexpected passes, Errors, and Reruns.)
+- execution details
+- logs
+- additional browser error tracking (In the photo above, the test passed because it verified the main requirements: creating and deleting an table.
+  However, during the test, an Error: 404 appeared in the console, which my bad_responses method in the teardown caught. The test is marked as “pass,” which is true, but it also contains an error, which is clearly visible in this report. In Allure, this isn’t split into “pass/fail + error”; there’s only “fail/pass,” which I think is a plus for the pytest report, because it makes the report easier to read.)
+- additional attachments, such as screenshots:
+  ![Pytest report](images/README/report_with_screenshots-pytest.jpg)
+
+In addition, the current repository is also configured for the `Allure` report:
+![Allure report](images/README/report-allure.jpg)
+
+## Browser Error Monitoring
+
+The test framework includes lightweight browser-side monitoring that detects:
+
+- **HTTP 4xx and 5xx responses** (server and client errors)
+- **Network failures** (`requestfailed`, e.g. `net::ERR_ABORTED`)
+- **Uncaught JavaScript errors** (`pageerror`)
+- **Console errors** (`console` messages with type `error`)
+
+Automated tests identified a real issue in the production environment of the trello.com application, as shown in the screenshot below:
+![Logs (Browser Error Monitoring)](images/README/bad_responses.jpg)
+
+The same information will be available in the Pytest test report:
+![Pytest report_html](images/README/bad_responses_pytest_report_html.jpg)
+
+Even when a UI test passes functionally, the framework reports hidden application issues discovered during execution. Detected issues are logged with context (page URL, resource URL, status/error) and can be configured to:
+
+- **Fail the test** for critical issues (default: HTTP 4xx/5xx on your own API)
+- **Save HAR and screenshots** for triage
+- **Ignore** known benign hosts or error types via a configurable whitelist/blacklist
+
+This monitoring helps detect:
+
+- broken API calls
+- missing or 404 resources
+- unexpected backend errors
+- silent frontend runtime issues
 
 ## Accessibility tests (axe)
 
@@ -169,31 +205,6 @@ I also added:
   ![Pytest report](images/README/axe_in_pytest_report_html.jpg)
 - generation of `Axe` reports:
   ![Pytest report](images/README/axe_report.jpg)
-
-## Advanced HTML Reporting
-
-Test reports (configured in `pytest.ini`) are generated using:
-
-```ini
-addopts = --html=report.html --self-contained-html
-```
-
-You don't need to generate a report as you would in `Allure`, the `report.html` file appears automatically in the root directory, all you have to do is run the tests.
-
-![Pytest report](images/README/report-pytest.jpg)
-
-The report contains:
-
-- passed/failed/skipped tests (as well as additional statuses Expected failures, Unexpected passes, Errors, and Reruns.)
-- execution details
-- logs
-- additional browser error tracking (In the photo above, the test passed because it verified the main requirements: creating and deleting an table.
-  However, during the test, an Error: 404 appeared in the console, which my bad_responses method in the teardown caught. The test is marked as “pass,” which is true, but it also contains an error, which is clearly visible in this report. In Allure, this isn’t split into “pass/fail + error”; there’s only “fail/pass,” which I think is a plus for the pytest report, because it makes the report easier to read.)
-- additional attachments, such as screenshots:
-  ![Pytest report](images/README/report_with_screenshots-pytest.jpg)
-
-In addition, the current repository is also configured for the `Allure` report:
-![Allure report](images/README/report-allure.jpg)
 
 ## Debug Browser Configuration
 
