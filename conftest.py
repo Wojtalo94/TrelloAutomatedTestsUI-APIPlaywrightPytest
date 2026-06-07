@@ -132,16 +132,24 @@ def capture_bad_responses(logged_in_page):
         yield bad
 
     finally:
+        # detaching the context listener
         try:
-            if hasattr(context, "remove_listener"):
-                context.remove_listener("page", _on_new_page)
-            elif hasattr(context, "off"):
+            if hasattr(context, "off"):
                 context.off("page", _on_new_page)
+            elif hasattr(context, "remove_listener"):
+                context.remove_listener("page", _on_new_page)
             else:
-                logger.debug("BrowserContext has no remove_listener/off method; leaving listener attached")
-        except Exception as e:
-            logger.warning(f"Failed to detach page listener: {e}")
+                logger.debug("BrowserContext has no off/remove_listener; leaving listener attached")
+        except Exception:
+            logger.exception("Failed to detach context page listener")
 
+        # removing all handlers added to pages
+        try:
+            bad.detach()
+        except Exception:
+            logger.exception("Failed to detach page handlers")
+
+        # assertion
         bad.assert_no_bad_responses()
 
 # =========================
