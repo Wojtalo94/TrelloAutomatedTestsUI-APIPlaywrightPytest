@@ -226,7 +226,7 @@ def pytest_runtest_makereport(item, call):
     # ensure report.extra exists
     report.extra = getattr(report, "extra", [])
 
-    # only for UI / accessibility tests and only when the test failed in 'call'
+    # only for UI / UI+API tests and only when the test failed in 'call'
     if report.when == "call" and report.failed and ("ui" in item.keywords or "ui_and_api" in item.keywords):
         page = item.funcargs.get("logged_in_page")
 
