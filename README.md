@@ -148,8 +148,37 @@ The report contains:
 - additional attachments, such as screenshots:
   ![Pytest report](images/README/report_with_screenshots-pytest.jpg)
 
-In addition, the current repository is also configured for the `Allure` report:
-![Allure report](images/README/report-allure.jpg)
+---
+
+In addition, the current repository is also configured for the `Allure` report (there are also violations from accessibility tests (`axe`) and screenshots):
+![Allure report](images/README/report_allure.jpg)
+
+To run Allure, you need to:
+
+1. Ensure the following is enabled in pytest.ini:
+
+```python
+addopts = --html=report.html --self-contained-html
+```
+
+2. After the tests finish, you must process the raw results into a report to generate the report:
+
+   ```python
+   allure generate allure-results -o allure-report --clean
+   ```
+
+   Additionally:
+   - `allure-report` - is the folder containing the finished report
+   - `--clean` - deletes the previous version of the report
+
+3. Run the interactive Allure server to view the report.
+
+   ```python
+   allure open allure-report
+   ```
+
+   - a browser will open with the full report
+   - it will include test results, screenshots, Axe summary, and test metadata
 
 ## Browser Error Monitoring
 
