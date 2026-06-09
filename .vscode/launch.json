@@ -10,13 +10,14 @@
       "request": "launch",
       "module": "pytest",
       "args": [
-        //"-m", "test"
-        //"-m", "ui"
-        //"-m", "api"
-        //"-m", "ui_and_api"
-        //"-m", "accessibility"
-        //"-m", "fail"
-        //"-m", "smoke"
+        //"-m",
+        //"test",
+        //"ui"
+        //"api"
+        // "ui_and_api"
+        //"accessibility"
+        // "fail"
+        // "smoke"
       ]
     }
   ]

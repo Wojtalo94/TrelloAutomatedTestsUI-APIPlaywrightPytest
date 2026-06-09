@@ -161,6 +161,7 @@ def capture_bad_responses(logged_in_page):
         # assertion
         bad.assert_no_bad_responses()
 
+
 # =========================
 # Axe fixtures and helpers
 # =========================

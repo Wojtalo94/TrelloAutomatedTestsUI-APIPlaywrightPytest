@@ -7,3 +7,4 @@ python-dotenv
 allure-pytest
 pytest-playwright-axe
 requests==2.34.2
+Faker

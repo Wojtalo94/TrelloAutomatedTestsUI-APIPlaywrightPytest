@@ -46,14 +46,16 @@ This framework is designed to provide:
 - `Python` 3.13
 - `Playwright`
 - `Pytest`
-- Python `requests`
-- HTML reporting `pytest-html`
+- Python `requests` - for API and UI+API testing
+- HTML reporting `pytest-html` (or `Allure`)
 - `python-dotenv`
 - `Logging` architecture
 - `YAML` configuration
 - `logging-based` diagnostics
 - `POM` - Page Object Model
 - pure `UI`, pure `API` and Hybrid `UI+API` testing
+- `pytest-playwright-axe`- for accessibility testing
+- Python `Faker` - for data generation
 
 All libraries listed in the `requirements.txt` file were updated on June 3, 2026, to the latest stable version.
 
@@ -153,7 +155,7 @@ The report contains:
 In addition, the current repository is also configured for the `Allure` report (there are also violations from accessibility tests (`axe`) and screenshots):
 ![Allure report](images/README/report_allure.jpg)
 
-To run Allure, you need to:
+To run `Allure`, you need to:
 
 1. Ensure the following is enabled in pytest.ini:
 
@@ -275,6 +277,16 @@ Tests are grouped using custom markers:
 - `ui_and_api` – tests combining UI and API flows
 - `smoke` – smoke tests for quick validation of core functionality
 - `accessibility` – accessibility tests using axe-core (WCAG validation)
+
+## Random data generator
+
+The `helpers.data_gen` module contains a simple helper for generating dynamic names and random numbers that can be used in tests. It serves as an alternative to parameterizing constant values.
+
+Recommendations:
+
+- use **dynamic data** when you want to avoid resource conflicts or increase test variety or coverage (used as an example for the **API** test `test_create_update_and_delete_board`)
+- use **constant values** where the test requires stable, unchanging input, e.g., reference values, contracts (used as an example for the **UI** `test test_create_board`)
+- **log the seed** — the helper logs **TEST_SEED** when it is created; save it to reproduce a problematic run.
 
 ## Environment Variables
 
