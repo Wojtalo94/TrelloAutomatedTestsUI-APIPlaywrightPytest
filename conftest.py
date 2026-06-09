@@ -272,7 +272,6 @@ def pytest_runtest_makereport(item, call):
 def allure_report(request):
     """
     Autouse fixture that attaches concise info to Allure per test.
-    Completely independent from pytest-html.
     - attaches basic metadata
     - attaches Axe concise summary if present on request.node (no full Axe report)
     - attaches screenshot only on failure (if logged_in_page used)
